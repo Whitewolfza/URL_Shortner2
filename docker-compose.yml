@@ -1,0 +1,24 @@
+services:
+  url_shortner:
+    image: ${DOCKER_REGISTRY-}urlshortner
+    build:
+      context: .
+      dockerfile: URL_Shortner/Dockerfile
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: shorty
+      POSTGRES_PASSWORD: short159357
+      POSTGRES_DB: short_urls
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - 5435:5435    
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@test.com
+      PGADMIN_DEFAULT_PASSWORD: shorty159357
+    ports:
+      - 8080:80
