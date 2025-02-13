@@ -4,6 +4,9 @@ services:
     build:
       context: .
       dockerfile: URL_Shortner/Dockerfile
+    depends_on:
+      - postgres
+    restart: unless-stopped
   postgres:
     image: postgres
     environment:
@@ -14,7 +17,8 @@ services:
       - ./data:/var/lib/postgresql/data
       - ./init-scripts:/docker-entrypoint-initdb.d
     ports:
-      - 5435:5435    
+      - 5435:5435  
+    restart: unless-stopped
   pgadmin:
     image: dpage/pgadmin4
     environment:
